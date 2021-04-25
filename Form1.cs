@@ -19,69 +19,74 @@ namespace ödev
             InitializeComponent();
         }
 
+
+
         string sitelink = "https://www.cnnturk.com/feed/rss/all/news";
         private int sayac;
 
 
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer2_Tick(object sender, EventArgs e)
         {
             sayac++;
-            timer1.Start();
-            timer1.Interval = 1000;
+            timer2.Start();
+            timer2.Interval = 1000;
+            label2.Text = sayac.ToString();
             if (sayac == 5)
             {
-                sayac = 0;
-                MessageBox.Show("5 dakikanız doldu tekrar analiz yapıyorum.", "Uyar!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //Keşke kodlarını hatırlaya bilseydim veya bulabilseydim çok yakındı 
+
+                TextWriter tw = new StreamWriter(@"C:\deneme\deneme.txt");
+                tw.Write("");
+                tw.Close();
+
+
             }
-            label1.Text = sayac.ToString();
-        }
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            XmlDocument doc1 = new XmlDocument();
-            doc1.Load(sitelink);
-            XmlElement root = doc1.DocumentElement;
-            XmlNodeList nodes = root.SelectNodes("channel/item");
-
-
-            foreach (XmlNode node in nodes)
+            if (sayac == 10)
             {
-
-
-
-                string baslik = node["title"].InnerText;
-                string haber = node["description"].InnerText;
-
-
-
-
-                DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
-                row.Cells[0].Value = baslik;
-                row.Cells[1].Value = haber;
-                dataGridView1.Rows.Add(row);
-
-
-                string fileName = @"C:\deneme\deneme.txt";
-                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
-                fs.Close();
-                File.AppendAllText(fileName, Environment.NewLine + "Haber Başlığı::" + baslik + Environment.NewLine + "Haber içeriği::" + haber + Environment.NewLine);
+                sayac = 0;
+                MessageBox.Show("1 saat doldu tekrar analiz yapıyorum.", "Uyar!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //Keşke kodlarını hatırlaya bilseydim veya bulabilseydim çok yakındı 
 
 
 
 
-                
+
+
+                XmlDocument doc1 = new XmlDocument();
+                doc1.Load(sitelink);
+                XmlElement root = doc1.DocumentElement;
+                XmlNodeList nodes = root.SelectNodes("channel/item");
+
+
+                foreach (XmlNode node in nodes)
+                {
+
+
+
+                    string baslik = node["title"].InnerText;
+                    string haber = node["description"].InnerText;
+
+
+
+
+
+
+
+
+
+
+                    string fileName = @"C:\deneme\deneme.txt";
+                    FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
+                    fs.Close();
+                    File.AppendAllText(fileName, Environment.NewLine + "Haber Başlığı::" + baslik + Environment.NewLine + "Haber içeriği::" + haber + Environment.NewLine);
+
+                }
+
+
+
 
 
             }
-
-
-
-
-
         }
 
         
