@@ -20,6 +20,23 @@ namespace ödev
         }
 
         string sitelink = "https://www.cnnturk.com/feed/rss/all/news";
+        private int sayac;
+
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            sayac++;
+            timer1.Start();
+            timer1.Interval = 1000;
+            if (sayac == 5)
+            {
+                sayac = 0;
+                MessageBox.Show("5 dakikanız doldu tekrar analiz yapıyorum.", "Uyar!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //Keşke kodlarını hatırlaya bilseydim veya bulabilseydim çok yakındı 
+            }
+            label1.Text = sayac.ToString();
+        }
 
 
         private void button1_Click(object sender, EventArgs e)
@@ -51,8 +68,12 @@ namespace ödev
                 string fileName = @"C:\deneme\deneme.txt";
                 FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
                 fs.Close();
-                File.AppendAllText(fileName, Environment.NewLine + "Başlığı::" + baslik + Environment.NewLine + "Haber içeriği::" + haber + Environment.NewLine);
+                File.AppendAllText(fileName, Environment.NewLine + "Haber Başlığı::" + baslik + Environment.NewLine + "Haber içeriği::" + haber + Environment.NewLine);
 
+
+
+
+                
 
 
             }
@@ -62,5 +83,7 @@ namespace ödev
 
 
         }
+
+        
     }
 }
